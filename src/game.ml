@@ -4,6 +4,7 @@ open Ecs
 
 
 let init dt =
+  let _ = Building.core_bld () in
   Ecs.System.init_all dt;
   Some ()
 

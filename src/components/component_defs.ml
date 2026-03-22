@@ -41,6 +41,18 @@ class resolver () =
     method resolve = r
   end
 
+class health () =
+  let r = Component.init 100.0 in
+  object
+    method health = r
+  end
+
+class timer () =
+  let r = Component.init 0.0 in
+  object
+    method timer = r
+  end
+
 
 (*archetype*)
 class type drawable =
@@ -77,6 +89,8 @@ class building (t:tag) =
     inherit texture ()
     inherit tagged t
     inherit resolver ()
+    inherit health ()
+    inherit timer ()
   end
 
 class soldier (t:tag) = 
@@ -88,6 +102,8 @@ class soldier (t:tag) =
     inherit velocity ()
     inherit tagged t
     inherit resolver ()
+    inherit health ()
+    inherit timer ()
   end
 
 class projectile damage =
