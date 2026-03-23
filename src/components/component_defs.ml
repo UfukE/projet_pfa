@@ -25,21 +25,22 @@ class texture () =
   end
 
 type tag = ..
-type tag += Core
-type tag += Tower | Wall | Projectile of int
-type tag += Enemy | Ally
+type tag += No_tag
+type tag += Projectile of int
 
-class tagged (t : tag) =
-  let r = Component.init t in
+
+class tagged () =
+  let r = Component.init No_tag in
   object
     method tag = r
   end
 
-class resolver () =
-  let r = Component.init (fun (_ : Vector.t) (_ : tag) -> ()) in
+(*class resolver () =
+  let r = Component.init (fun (_ : Vector.t) (_ : tagged) -> ()) in
   object
     method resolve = r
   end
+*)
 
 class health () =
   let r = Component.init 100.0 in
@@ -70,49 +71,62 @@ class type movable =
     inherit velocity
   end
 
-class type collidable =
+class type interactable =
   object
     inherit Entity.t
+    inherit tagged
+    inherit health
+    inherit timer
+  end
+
+class resolver () =
+  let r = Component.init (fun (_ : Vector.t) (_ : interactable) -> ()) in
+  object
+    method resolve = r
+  end
+
+class type collidable =
+  object
+    inherit interactable
     inherit position
     inherit box
-    inherit tagged
     inherit resolver
   end
 
 (*real objects*)
 
-class building (t:tag) =
+class building () =
   object
     inherit Entity.t ()
     inherit position ()
     inherit box ()
     inherit texture ()
-    inherit tagged t
+    inherit tagged ()
     inherit resolver ()
     inherit health ()
     inherit timer ()
   end
 
-class soldier (t:tag) = 
+class soldier () = 
   object 
     inherit Entity.t ()
     inherit position ()
     inherit box()
     inherit texture ()
     inherit velocity ()
-    inherit tagged t
+    inherit tagged ()
     inherit resolver ()
     inherit health ()
     inherit timer ()
   end
 
-class projectile damage =
+class projectile () =
   object
     inherit Entity.t ()
     inherit position ()
     inherit box ()
     inherit texture ()
     inherit velocity ()
-    inherit tagged (Projectile(damage))
+    inherit tagged ()
     inherit resolver ()
   end
