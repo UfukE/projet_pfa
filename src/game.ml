@@ -4,13 +4,15 @@ open Ecs
 
 
 let init dt =
-  let _ = Building.core_bld () in
+  let _ = Building.add_core () in
+  let _ = Soldier.add_random_soldier 0 in
   Ecs.System.init_all dt;
   Some ()
 
 
 let update dt =
   let () = Input.handle_input () in  
+  Move_system.update dt;
   Draw_system.update dt;
   None
 
