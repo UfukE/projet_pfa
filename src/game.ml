@@ -27,7 +27,7 @@ let run () =
   in
   let window = Gfx.create  window_spec in
   let ctx = Gfx.get_context window in
-  let global = Global.{ window; ctx } in
+  let global = Global.{ window; ctx; money = 100; wave=0; mode=Build(None) } in
   Global.set global;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in ()
