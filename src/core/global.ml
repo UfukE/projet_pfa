@@ -5,11 +5,12 @@ type mode = Build of Cst.buildings option | Defense
 type t = {
   window : Gfx.window;
   ctx : Gfx.context;
-  mutable money : int;
-  mutable wave : int;
-  mutable mode: mode;
+  font: Gfx.font;
+  money : int;
+  wave : int;
+  mode: mode;
+  mouse_pos: int*int;
 }
-
 
 let get, set = 
   let state = ref None in

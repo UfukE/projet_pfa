@@ -20,14 +20,28 @@ let add_core () = create
   Cst.core_x
   Cst.core_y
   500.0
-  Texture.gold
+  (Texture.Color Cst.gold)
   20 20
   Core
 
 let add_archer x y = create
   x y
   120.0
-  Texture.green
+  (Texture.Color (Cst.building_color 255 Archer))
+  20 20
+  Tower
+
+let add_bomber x y = create
+  x y
+  150.0
+  (Texture.Color (Cst.building_color 255 Bomber))
+  20 20
+  Tower
+
+let add_freezer x y = create
+  x y
+  100.0
+  (Texture.Color (Cst.building_color 255 Freezer))
   20 20
   Tower
 

@@ -47,4 +47,4 @@ let add_random_soldier dir =
   (Vector.{x=x;y=y}) in
   let v = Vector.normalize v in
   let v = Vector.mult (0.2 +. Random.float 2.5) v in
-  create_s x y v 40.0 Texture.red 20 20 Enemy
+  create_s x y v 40.0 (Texture.Color (Cst.red 255)) 20 20 Enemy

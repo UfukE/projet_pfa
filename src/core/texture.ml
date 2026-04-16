@@ -2,13 +2,6 @@ type t =
     Image of Gfx.surface
   | Color of Gfx.color
 
-let black = Color (Gfx.color 0 0 0 255)
-let white = Color (Gfx.color 255 255 255 255)
-let red = Color (Gfx.color 255 0 0 255)
-let green = Color (Gfx.color 0 255 0 255)
-let blue = Color (Gfx.color 0 0 255 255)
-let gold = Color (Gfx.color 239 191 4 255)
-let transparent = Color (Gfx.color 0 0 0 0)
 
 let draw ctx dst pos box src =
   let x = int_of_float pos.Vector.x in

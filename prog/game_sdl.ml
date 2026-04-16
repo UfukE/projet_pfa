@@ -1,1 +1,1 @@
-let () = Game.run ()
+let () = Game.run "resources/Inconsolata-Regular.ttf"
