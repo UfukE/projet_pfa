@@ -12,6 +12,7 @@ let update _dt el =
     if e#health#get <= 0.0 then begin
       (match e#tag#get with
       | Enemy _ -> Wave.enemy_died ()
+      | Core -> Gfx.debug "GAME OVER!!\n%!"; exit 0
       | _ -> ());
       Entity.delete e
     end
