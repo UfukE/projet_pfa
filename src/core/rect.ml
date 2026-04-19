@@ -8,7 +8,7 @@ type t = { width : int; height : int }
 *)
 
 let mdiff v1 r1 v2 r2 = 
-  Vector.{x = v1.x -. v2.x -. float r1.width; y = v1.y -. v2.y -. float r1.height}
+  Vector.{x = v1.x -. v2.x -. float r2.width; y = v1.y -. v2.y -. float r2.height}
   ,
   {width = r1.width + r2.width; height = r1.height + r2.height}
 

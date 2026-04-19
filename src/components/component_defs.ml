@@ -26,7 +26,10 @@ class texture () =
 
 type tag = ..
 type tag += No_tag
-type tag += Projectile of int
+type tag += Projectile
+type tag += Core | Wall
+type tag += Tower of Cst.buildings
+type tag += Enemy of Cst.state | Ally
 
 
 class tagged () =
@@ -34,13 +37,6 @@ class tagged () =
   object
     method tag = r
   end
-
-(*class resolver () =
-  let r = Component.init (fun (_ : Vector.t) (_ : tagged) -> ()) in
-  object
-    method resolve = r
-  end
-*)
 
 class health () =
   let r = Component.init 100.0 in
@@ -54,7 +50,6 @@ class timer () =
     method timer = r
   end
 
-
 (*archetype*)
 class type drawable =
   object
@@ -62,6 +57,8 @@ class type drawable =
     inherit position
     inherit box
     inherit texture
+    inherit tagged
+    inherit timer
   end
 
 class type movable =
@@ -69,6 +66,7 @@ class type movable =
     inherit Entity.t
     inherit position
     inherit velocity
+    inherit tagged
   end
 
 class type interactable =
@@ -87,10 +85,21 @@ class resolver () =
 
 class type collidable =
   object
+    inherit Entity.t
     inherit interactable
     inherit position
     inherit box
     inherit resolver
+  end
+
+class type attackable = (*attacker and defenders like towers and soldiers *)
+  object
+    inherit Entity.t
+    inherit position
+    inherit box
+    inherit health
+    inherit tagged
+    inherit timer
   end
 
 (*real objects*)
@@ -129,4 +138,6 @@ class projectile () =
     inherit velocity ()
     inherit tagged ()
     inherit resolver ()
+    inherit timer ()
+    inherit health () (*stores the damage, needed for collidable interface as well*)
   end

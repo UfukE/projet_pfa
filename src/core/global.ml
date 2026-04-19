@@ -10,6 +10,12 @@ type t = {
   wave : int;
   mode: mode;
   mouse_pos: int*int;
+  grass: Gfx.surface;
+  archer_img: Gfx.surface;
+  bomber_img: Gfx.surface;
+  freezer_img: Gfx.surface;
+  core_img: Gfx.surface;
+  enemy_img: Gfx.surface;
 }
 
 let get, set = 
