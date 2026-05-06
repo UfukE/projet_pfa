@@ -97,7 +97,12 @@ let spawner_cooldown       = 90.0
 let spawner_max_allies     = 4
 
 let enemy_soldier_health = 40.0
+let enemy_soldier_health_per_wave = 6.0
 let enemy_soldier_damage = 10.0
+
+let enemy_soldier_health_for_wave wave =
+  let extra_waves = max 0 (wave - 1) in
+  enemy_soldier_health +. enemy_soldier_health_per_wave *. float extra_waves
 
 let ally_soldier_health = 28.0
 let ally_soldier_damage = 12.0

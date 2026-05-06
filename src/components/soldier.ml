@@ -185,11 +185,12 @@ let () =
 
 let activate_enemy (e : soldier) x y =
   let v = get_enemy_velocity Vector.{ x; y } in
+  let wave = (Global.get ()).wave in
   e#tag#set (Enemy Normal);
   e#texture#set (Texture.Image (Global.get ()).enemy_img);
   e#position#set Vector.{ x; y };
   e#velocity#set v;
-  e#health#set Cst.enemy_soldier_health;
+  e#health#set (Cst.enemy_soldier_health_for_wave wave);
   e#timer#set 0.0;
   Wave.enemy_spawned ()
 
