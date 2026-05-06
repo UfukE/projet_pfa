@@ -14,6 +14,10 @@ type t = {
   archer_img: Gfx.surface;
   bomber_img: Gfx.surface;
   freezer_img: Gfx.surface;
+  wall_img: Gfx.surface;
+  laser_img: Gfx.surface;
+  spawn_img: Gfx.surface;
+  ally_img: Gfx.surface;
   core_img: Gfx.surface;
   enemy_img: Gfx.surface;
 }

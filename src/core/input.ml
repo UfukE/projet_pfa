@@ -8,9 +8,12 @@ let on_left_click x y =
     let cost = Cst.building_cost bld in
     if g.money >= cost && Building.can_place x y then
       let _ = match bld with
-      | Archer  -> Building.add_archer  x y
-      | Bomber _  -> Building.add_bomber  x y
-      | Freezer -> Building.add_freezer x y
+      | Cst.Archer -> Building.add_archer x y
+      | Cst.Bomber _ -> Building.add_bomber x y
+      | Cst.Freezer -> Building.add_freezer x y
+      | Cst.Wall -> Building.add_wall x y
+      | Cst.Laser dir -> Building.add_laser x y dir
+      | Cst.Spawner -> Building.add_spawner x y
       in
       Global.set {g with money=g.money-cost}
   | _ -> ()
@@ -36,13 +39,13 @@ let handle_input () =
 
 let set_building b =
   let g = Global.get () in
-  match b with
-  | None -> Global.set {g with mode=Build None}
-  | Some(bld) when g.money >= Cst.building_cost bld -> begin
-      match g.mode with
-      | Defense -> ()
-      | Build _ -> Global.set {g with mode= Build(b)}
-  end
+  match g.mode, b with
+  | Defense, _ -> ()
+  | Build (Some (Cst.Laser dir)), Some (Cst.Laser _) ->
+    Global.set {g with mode = Build (Some (Cst.Laser (Cst.next_direction dir)))}
+  | _, None -> Global.set {g with mode=Build None}
+  | _, Some(bld) when g.money >= Cst.building_cost bld ->
+    Global.set {g with mode=Build (Some bld)}
   | _ -> ()
 
 let start_wave () =
@@ -59,6 +62,9 @@ let () =
   register "1" (fun () -> set_building (Some Cst.Archer));
   register "2" (fun () -> set_building (Some (Cst.Bomber Vector.zero)));
   register "3" (fun () -> set_building (Some Cst.Freezer));
+  register "4" (fun () -> set_building (Some Cst.Wall));
+  register "5" (fun () -> set_building (Some (Cst.Laser Cst.North)));
+  register "6" (fun () -> set_building (Some Cst.Spawner));
   register "0" (fun () -> set_building None);
   register "space" start_wave; (* SDL *)
   register " " start_wave;     (* JS *)
@@ -66,4 +72,7 @@ let () =
   register "keypad 1" (fun () -> set_building (Some Cst.Archer));
   register "keypad 2" (fun () -> set_building (Some (Cst.Bomber Vector.zero)));
   register "keypad 3" (fun () -> set_building (Some Cst.Freezer));
+  register "keypad 4" (fun () -> set_building (Some Cst.Wall));
+  register "keypad 5" (fun () -> set_building (Some (Cst.Laser Cst.North)));
+  register "keypad 6" (fun () -> set_building (Some Cst.Spawner));
   register "keypad 0" (fun () -> set_building None);

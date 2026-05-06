@@ -97,6 +97,7 @@ class type attackable = (*attacker and defenders like towers and soldiers *)
     inherit Entity.t
     inherit position
     inherit box
+    inherit velocity
     inherit health
     inherit tagged
     inherit timer
@@ -109,6 +110,7 @@ class building () =
     inherit Entity.t ()
     inherit position ()
     inherit box ()
+    inherit velocity ()
     inherit texture ()
     inherit tagged ()
     inherit resolver ()

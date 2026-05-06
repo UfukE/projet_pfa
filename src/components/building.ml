@@ -4,6 +4,14 @@ open System_defs
 
 let buildings = ref []
 
+let texture_of = function
+  | Cst.Archer -> Texture.Image (Global.get ()).archer_img
+  | Cst.Bomber _ -> Texture.Image (Global.get ()).bomber_img
+  | Cst.Freezer -> Texture.Image (Global.get ()).freezer_img
+  | Cst.Wall -> Texture.Image (Global.get ()).wall_img
+  | Cst.Laser _ -> Texture.Image (Global.get ()).laser_img
+  | Cst.Spawner -> Texture.Image (Global.get ()).spawn_img
+
 let can_place x y =
   let p = Vector.{x; y} in
   let b = Rect.{width = Cst.bs; height = Cst.bs} in
@@ -69,23 +77,44 @@ let add_core () = create
 let add_archer x y = create
   x y
   120.0
-  (Texture.Image (Global.get()).archer_img) 
+  (texture_of Cst.Archer)
   Cst.bs Cst.bs
-  (Tower Archer)
+  (Tower Cst.Archer)
 
 let add_bomber x y = create
   x y
   150.0
-  (Texture.Image (Global.get()).bomber_img)
+  (texture_of (Cst.Bomber Vector.zero))
   Cst.bs Cst.bs
-  (Tower (Bomber Vector.{x=Cst.core_x; y=Cst.core_y}))
+  (Tower (Cst.Bomber Vector.{x=Cst.core_x; y=Cst.core_y}))
 
 let add_freezer x y = create
   x y
   100.0
-  (Texture.Image (Global.get()).freezer_img)
+  (texture_of Cst.Freezer)
   Cst.bs Cst.bs
-  (Tower Freezer)
+  (Tower Cst.Freezer)
+
+let add_wall x y = create
+  x y
+  Cst.wall_health
+  (texture_of Cst.Wall)
+  Cst.bs Cst.bs
+  Component_defs.Wall
+
+let add_laser x y dir = create
+  x y
+  Cst.laser_health
+  (texture_of (Cst.Laser dir))
+  Cst.bs Cst.bs
+  (Tower (Cst.Laser dir))
+
+let add_spawner x y = create
+  x y
+  Cst.spawner_health
+  (texture_of Cst.Spawner)
+  Cst.bs Cst.bs
+  (Tower Cst.Spawner)
 
 
 

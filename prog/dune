@@ -4,6 +4,8 @@
  (modules game_js)
  (promote (until-clean))
  (preprocess (pps js_of_ocaml-ppx))
+ (js_of_ocaml
+	(flags --source-map-inline --debuginfo))
  (libraries game js_of_ocaml gfx_jsoo))
 
 
